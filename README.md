@@ -1,18 +1,32 @@
 <a href="https://app.daily.dev/shubhamneupane"><img src="https://api.daily.dev/devcards/2517c4aaac2e41c09b5e9ecb80c08961.png?r=7nc" width="400" alt="Shubham Neupane's Dev Card"/></a>
 
-### Hi there 👋
+## Hey there, I'm ***Mohammad Shadman*** 😁 
 
-<!--
-**Access7-s/Access7-s** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
-Here are some ideas to get you started:
+⚡ **About:**
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+
+  Electronics & Communication Engineering Undergraduate At Jamia Hamdard, Delhi, India. Interested In Security Analysis, Software Development, Artificial Intelligence & Machine Learning.
+
+
+⚡ **Languages:**
+
+
+[![](https://github-readme-stats.vercel.app/api/top-langs/?username=Access7-s&layout=compact&theme=midnight-purple)](https://github.com/Access7-s?tab=repositories)
+
+
+⚡ **Repos:**
+
+
+
+
+⚡ **Stats:**
+
+
+[![](https://github-readme-stats.vercel.app/api?username=Access7-s&show_icons=true&theme=midnight-purple)](https://github.com/Access7-s?tab=repositories)
+
+
+⚡ **Connect:**
+
+
+
