@@ -1,6 +1,6 @@
 <a href="https://app.daily.dev/shubhamneupane"><img src="https://api.daily.dev/devcards/2517c4aaac2e41c09b5e9ecb80c08961.png?r=7nc" width="400" alt="Shubham Neupane's Dev Card"/></a>
 
-## Hey there, I'm ***Mohammad Shadman*** 😁 
+## Hey there, I'm ***Shubham Neupane*** 😁 
 
 
 ⚡ **About:**
