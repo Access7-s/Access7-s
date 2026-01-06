@@ -6,7 +6,7 @@
 ⚡ **About:**
 
 
-  Artificial Intelligence Undergraduate At Herald College, Kathmandu, Nepal. Interested In Security Analysis, Software Development, Artificial Intelligence & Machine Learning.
+  Artificial Intelligence Undergraduate At Herald College, Kathmandu, Nepal. Interested In Project Management, Software Development, Artificial Intelligence & Machine Learning.
 
 
 ⚡ **Languages:**
