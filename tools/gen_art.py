@@ -73,7 +73,7 @@ def band(y, t, cell, unit):
 
 def header(theme):
     t = THEMES[theme]
-    h, cell, unit = 300, 4, 120
+    h, cell, unit = 320, 4, 120
     return "".join([
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{h}" '
         f'viewBox="0 0 {W} {h}" role="img" aria-label="Shubham Neupane">',
@@ -88,18 +88,20 @@ def header(theme):
         f'<rect width="{W}" height="{h}" fill="url(#dots)"/>',
         band(46, t, cell, unit),
         band(h - 46, t, cell, unit),
-        f'<line x1="90" y1="106" x2="{W-90}" y2="106" stroke="{t["rule"]}" stroke-width="1"/>',
-        f'<line x1="90" y1="{h-106}" x2="{W-90}" y2="{h-106}" stroke="{t["rule"]}" stroke-width="1"/>',
-        f'<text x="{W//2}" y="166" text-anchor="middle" '
-        f'font-family="Georgia, \'Times New Roman\', serif" font-size="54" '
+        # The bands occupy y 18..74 and 246..302, leaving 74..246 for type.
+        # The block runs from the name's cap-top to the last line's descender
+        # (~92px) and is centred in that zone, so the margins above and below
+        # come out equal. No rules — the bands already frame it.
+        f'<text x="{W//2}" y="149" text-anchor="middle" '
+        f'font-family="Georgia, \'Times New Roman\', serif" font-size="50" '
         f'letter-spacing="7" fill="{t["ink"]}">SHUBHAM NEUPANE</text>',
-        f'<text x="{W//2}" y="200" text-anchor="middle" '
-        f'font-family="Helvetica, Arial, sans-serif" font-size="15" '
+        f'<text x="{W//2}" y="181" text-anchor="middle" '
+        f'font-family="Helvetica, Arial, sans-serif" font-size="14" '
         f'letter-spacing="4.5" fill="{t["sub"]}">'
         'TECHNICAL PRODUCT MANAGER &#183; PRODUCT OWNER</text>',
-        f'<text x="{W//2}" y="226" text-anchor="middle" '
-        f'font-family="Helvetica, Arial, sans-serif" font-size="12.5" '
-        f'letter-spacing="3.5" fill="{t["sub"]}">'
+        f'<text x="{W//2}" y="203" text-anchor="middle" '
+        f'font-family="Helvetica, Arial, sans-serif" font-size="12" '
+        f'letter-spacing="3" fill="{t["sub"]}">'
         'CO-FOUNDER, AURORA STUDIOS &#183; KATHMANDU, NEPAL</text>',
         '</svg>',
     ])
