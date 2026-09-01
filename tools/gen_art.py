@@ -10,6 +10,8 @@ rather than a few hundred.
 
 import os
 
+from contours import contour_paths
+
 W = 1200
 
 THEMES = {
@@ -81,11 +83,10 @@ def header(theme):
         group("star", star_cells(7), cell),
         group("ring", ring_cells(4), cell),
         group("dot", diamond_cells(1), cell),
-        f'<pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">'
-        f'<circle cx="2" cy="2" r="1.1" fill="{t["texture"]}"/></pattern>',
         '</defs>',
         f'<rect width="{W}" height="{h}" fill="{t["bg"]}"/>',
-        f'<rect width="{W}" height="{h}" fill="url(#dots)"/>',
+        # Topographic contours: real isolines through a seeded smooth field.
+        contour_paths(W, h, t["texture"], step=5, levels=9, seed=11),
         band(46, t, cell, unit),
         band(h - 46, t, cell, unit),
         # The bands occupy y 18..74 and 246..302, leaving 74..246 for type.
