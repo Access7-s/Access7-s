@@ -42,7 +42,7 @@ Technical Product Manager and Product Owner with a software-development foundati
 A product studio in Kathmandu shipping web and AI products. I own product direction and delivery.
 
 **[shubhamneupane07.com.np](https://shubhamneupane07.com.np)** — Portfolio
-Full case studies, experience and contact. Built with React, TypeScript, Tailwind v4 and Framer Motion — [source](https://github.com/Access7-s/shubham-portfolio).
+Full case studies, experience and contact. Built with React, TypeScript, Tailwind v4 and Framer Motion.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Access7-s/Access7-s/main/assets/divider-dark.svg" />
