@@ -75,32 +75,30 @@ def band(y, t, cell, unit):
 
 def header(theme):
     t = THEMES[theme]
-    h, cell, unit = 320, 4, 120
+    h = 220
+
+    # The text block runs from the name's cap-top to the last line's
+    # descender. Centring that box (rather than the baselines) is what makes
+    # the space above and below come out equal.
+    cap, block = 35, 92
+    name_y = (h - block) / 2 + cap
+    sub1_y = name_y + 32
+    sub2_y = name_y + 54
+
     return "".join([
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{h}" '
         f'viewBox="0 0 {W} {h}" role="img" aria-label="Shubham Neupane">',
-        '<defs>',
-        group("star", star_cells(7), cell),
-        group("ring", ring_cells(4), cell),
-        group("dot", diamond_cells(1), cell),
-        '</defs>',
         f'<rect width="{W}" height="{h}" fill="{t["bg"]}"/>',
         # Topographic contours: real isolines through a seeded smooth field.
         contour_paths(W, h, t["texture"], step=5, levels=9, seed=11),
-        band(46, t, cell, unit),
-        band(h - 46, t, cell, unit),
-        # The bands occupy y 18..74 and 246..302, leaving 74..246 for type.
-        # The block runs from the name's cap-top to the last line's descender
-        # (~92px) and is centred in that zone, so the margins above and below
-        # come out equal. No rules — the bands already frame it.
-        f'<text x="{W//2}" y="149" text-anchor="middle" '
+        f'<text x="{W//2}" y="{name_y:.0f}" text-anchor="middle" '
         f'font-family="Georgia, \'Times New Roman\', serif" font-size="50" '
         f'letter-spacing="7" fill="{t["ink"]}">SHUBHAM NEUPANE</text>',
-        f'<text x="{W//2}" y="181" text-anchor="middle" '
+        f'<text x="{W//2}" y="{sub1_y:.0f}" text-anchor="middle" '
         f'font-family="Helvetica, Arial, sans-serif" font-size="14" '
         f'letter-spacing="4.5" fill="{t["sub"]}">'
         'TECHNICAL PRODUCT MANAGER &#183; PRODUCT OWNER</text>',
-        f'<text x="{W//2}" y="203" text-anchor="middle" '
+        f'<text x="{W//2}" y="{sub2_y:.0f}" text-anchor="middle" '
         f'font-family="Helvetica, Arial, sans-serif" font-size="12" '
         f'letter-spacing="3" fill="{t["sub"]}">'
         'CO-FOUNDER, AURORA STUDIOS &#183; KATHMANDU, NEPAL</text>',
