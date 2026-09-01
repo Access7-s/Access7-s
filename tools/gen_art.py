@@ -1,0 +1,136 @@
+"""Generate Dhaka-inspired SVG art for the profile README.
+
+Dhaka is the Nepali handwoven cross-stitch textile (as on the dhaka topi).
+The motifs sit on a square grid, so they map naturally onto SVG rects.
+
+Each motif is emitted once into <defs> and repeated with <use>, and the
+background texture is an SVG <pattern>, which keeps the files a few KB
+rather than a few hundred.
+"""
+
+import os
+
+W = 1200
+
+THEMES = {
+    "light": dict(bg="#FFFFFF", ink="#171717", accent="#C8102E",
+                  texture="#E9E9E9", sub="#6A6A6A", rule="#DCDCDC"),
+    "dark":  dict(bg="#0D1117", ink="#E6EDF3", accent="#E5484D",
+                  texture="#1B2029", sub="#8B949E", rule="#272E38"),
+}
+
+
+def star_cells(r=7, sq=4):
+    """Classic 8-pointed Dhaka star.
+
+    The union of a diamond (points on the axes) and a square (points on the
+    diagonals) is the standard cross-stitch eight-point star.
+    """
+    return [(dx, dy)
+            for dy in range(-r, r + 1)
+            for dx in range(-r, r + 1)
+            if abs(dx) + abs(dy) <= r or max(abs(dx), abs(dy)) <= sq]
+
+
+def diamond_cells(r):
+    return [(dx, dy)
+            for dy in range(-r, r + 1)
+            for dx in range(-r, r + 1)
+            if abs(dx) + abs(dy) <= r]
+
+
+def ring_cells(r):
+    """Hollow diamond outline."""
+    return [(dx, dy)
+            for dy in range(-r, r + 1)
+            for dx in range(-r, r + 1)
+            if abs(dx) + abs(dy) == r]
+
+
+def group(gid, cells, cell):
+    """Motif as a <g> with no fill, so <use fill=...> colours it by inheritance."""
+    body = "".join(
+        f'<rect x="{dx*cell}" y="{dy*cell}" width="{cell}" height="{cell}"/>'
+        for dx, dy in cells
+    )
+    return f'<g id="{gid}">{body}</g>'
+
+
+def use(gid, x, y, colour):
+    return f'<use href="#{gid}" x="{x:.0f}" y="{y:.0f}" fill="{colour}"/>'
+
+
+def band(y, t, cell, unit):
+    """Repeating strip: star, then a ring with a dot at its centre."""
+    out, x = [], unit // 2
+    while x < W + unit:
+        out.append(use("star", x, y, t["accent"]))
+        out.append(use("ring", x + unit // 2, y, t["ink"]))
+        out.append(use("dot", x + unit // 2, y, t["accent"]))
+        x += unit
+    return "".join(out)
+
+
+def header(theme):
+    t = THEMES[theme]
+    h, cell, unit = 300, 4, 120
+    return "".join([
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{h}" '
+        f'viewBox="0 0 {W} {h}" role="img" aria-label="Shubham Neupane">',
+        '<defs>',
+        group("star", star_cells(7), cell),
+        group("ring", ring_cells(4), cell),
+        group("dot", diamond_cells(1), cell),
+        f'<pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">'
+        f'<circle cx="2" cy="2" r="1.1" fill="{t["texture"]}"/></pattern>',
+        '</defs>',
+        f'<rect width="{W}" height="{h}" fill="{t["bg"]}"/>',
+        f'<rect width="{W}" height="{h}" fill="url(#dots)"/>',
+        band(46, t, cell, unit),
+        band(h - 46, t, cell, unit),
+        f'<line x1="90" y1="106" x2="{W-90}" y2="106" stroke="{t["rule"]}" stroke-width="1"/>',
+        f'<line x1="90" y1="{h-106}" x2="{W-90}" y2="{h-106}" stroke="{t["rule"]}" stroke-width="1"/>',
+        f'<text x="{W//2}" y="166" text-anchor="middle" '
+        f'font-family="Georgia, \'Times New Roman\', serif" font-size="54" '
+        f'letter-spacing="7" fill="{t["ink"]}">SHUBHAM NEUPANE</text>',
+        f'<text x="{W//2}" y="200" text-anchor="middle" '
+        f'font-family="Helvetica, Arial, sans-serif" font-size="15" '
+        f'letter-spacing="4.5" fill="{t["sub"]}">'
+        'TECHNICAL PRODUCT MANAGER &#183; PRODUCT OWNER</text>',
+        f'<text x="{W//2}" y="226" text-anchor="middle" '
+        f'font-family="Helvetica, Arial, sans-serif" font-size="12.5" '
+        f'letter-spacing="3.5" fill="{t["sub"]}">'
+        'CO-FOUNDER, AURORA STUDIOS &#183; KATHMANDU, NEPAL</text>',
+        '</svg>',
+    ])
+
+
+def divider(theme):
+    t = THEMES[theme]
+    h, cell, unit = 26, 3, 66
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{h}" '
+        f'viewBox="0 0 {W} {h}" role="img" aria-label="">',
+        '<defs>',
+        group("ring", ring_cells(3), cell),
+        group("dot", diamond_cells(1), cell),
+        '</defs>',
+        f'<rect width="{W}" height="{h}" fill="{t["bg"]}"/>',
+    ]
+    x = unit // 2
+    while x < W + unit:
+        out.append(use("ring", x, h // 2, t["accent"]))
+        out.append(use("dot", x + unit // 2, h // 2, t["ink"]))
+        x += unit
+    out.append('</svg>')
+    return "".join(out)
+
+
+if __name__ == "__main__":
+    os.makedirs("assets", exist_ok=True)
+    for name, fn in (("header", header), ("divider", divider)):
+        for theme in ("light", "dark"):
+            path = f"assets/{name}-{theme}.svg"
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(fn(theme))
+            print(f"wrote {path} ({os.path.getsize(path):,} bytes)")
